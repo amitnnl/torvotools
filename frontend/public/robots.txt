@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.torvotools.com/sitemap.xml
+
+# Block search engines from indexing the admin panel directory
+Disallow: /admin/
+Disallow: /admin
+Disallow: /backend/
