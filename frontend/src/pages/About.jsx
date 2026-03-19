@@ -24,10 +24,14 @@ const About = () => {
               <span className="text-primary text-xs font-bold uppercase tracking-normal">The Torvo Legacy</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-bold font-semibold tracking-tight text-slate-900 leading-[0.9]">
-              Engineering <br /> <span className="text-primary text-gradient">Reliability.</span>
+              {settings?.about_hero_title ? (
+                <span className="whitespace-pre-line">{settings.about_hero_title}</span>
+              ) : (
+                <>Engineering <br /> <span className="text-primary text-gradient">Reliability.</span></>
+              )}
             </h1>
             <p className="text-slate-500 text-base font-medium max-w-xl leading-relaxed uppercase tracking-wide">
-              Defining the standard for industrial procurement through technical precision and direct manufacturing partnerships.
+              {settings?.about_hero_subtitle || 'Defining the standard for industrial procurement through technical precision and direct manufacturing partnerships.'}
             </p>
           </div>
         </div>
@@ -39,7 +43,13 @@ const About = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <h2 className="text-3xl md:text-4xl font-bold font-semibold tracking-tight text-slate-900 border-l-8 border-primary pl-8">Operational Excellence <br /> <span className="text-primary">Since 2015.</span></h2>
+                <h2 className="text-3xl md:text-4xl font-bold font-semibold tracking-tight text-slate-900 border-l-8 border-primary pl-8">
+                  {settings?.about_narrative_title ? (
+                    <span className="whitespace-pre-line">{settings.about_narrative_title}</span>
+                  ) : (
+                    <>Operational Excellence <br /> <span className="text-primary">Since 2015.</span></>
+                  )}
+                </h2>
               </div>
               <div className="space-y-6 text-slate-600 text-lg font-medium leading-relaxed">
                 {settings?.about_content ? (
@@ -57,12 +67,12 @@ const About = () => {
               </div>
               <div className="grid grid-cols-2 gap-8 pt-4">
                 <div className="p-8 bg-slate-50 border border-slate-100 shadow-sm">
-                  <p className="text-4xl font-bold text-slate-900 tracking-tighter">500+</p>
-                  <p className="text-[10px] font-bold text-slate-400 tracking-wide mt-1">Authorized Centers</p>
+                  <p className="text-4xl font-bold text-slate-900 tracking-tighter">{settings?.about_stats_1_value || '500+'}</p>
+                  <p className="text-[10px] font-bold text-slate-400 tracking-wide mt-1">{settings?.about_stats_1_label || 'Authorized Centers'}</p>
                 </div>
                 <div className="p-8 bg-slate-50 border border-slate-100 shadow-sm">
-                  <p className="text-4xl font-bold text-slate-900 tracking-tighter">100%</p>
-                  <p className="text-[10px] font-bold text-slate-400 tracking-wide mt-1">Genuine Protocol</p>
+                  <p className="text-4xl font-bold text-slate-900 tracking-tighter">{settings?.about_stats_2_value || '100%'}</p>
+                  <p className="text-[10px] font-bold text-slate-400 tracking-wide mt-1">{settings?.about_stats_2_label || 'Genuine Protocol'}</p>
                 </div>
               </div>
             </div>

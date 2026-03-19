@@ -135,7 +135,7 @@ const Contact = () => {
       <section className="full-width h-[350px] bg-slate-50 border-y border-slate-100 grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-1000 overflow-hidden relative group">
         <div className="absolute inset-0 bg-primary/5 pointer-events-none transition-colors group-hover:bg-transparent"></div>
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.123456789012!2d77.12345678901234!3d28.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDA3JzI0LjUiTiA3N8KwMDcnMjQuNSJF!5e0!3m2!1sen!2sin!4v1612345678901!5m2!1sen!2sin"
+          src={settings?.google_map_url || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.123456789012!2d77.12345678901234!3d28.12345678901234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDA3JzI0LjUiTiA3N8KwMDcnMjQuNSJF!5e0!3m2!1sen!2sin!4v1612345678901!5m2!1sen!2sin"}
           width="100%"
           height="100%"
           style={{ border: 0 }}

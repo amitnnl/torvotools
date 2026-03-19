@@ -6,8 +6,38 @@ import { Label } from '../../components/ui/label';
 import { Textarea } from '../../components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Globe, Palette, Layout, Briefcase, Mail, Share2, Save, RefreshCw, Image as ImageIcon, ShieldCheck, ToggleLeft, Settings } from 'lucide-react';
+import { Globe, Palette, Layout, Briefcase, Mail, Share2, Save, RefreshCw, Image as ImageIcon, ShieldCheck, ToggleLeft, Settings, Users } from 'lucide-react';
 import { useSettings as useGlobalSettings } from '@/contexts/SettingsContext';
+
+const InputField = ({ label, name, type = "text", placeholder, settings, handleChange }) => (
+    <div className="space-y-2">
+        <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">{label}</Label>
+        <Input
+            name={name}
+            type={type}
+            value={settings[name] ?? ''}
+            onChange={handleChange}
+            placeholder={placeholder}
+            className="rounded-xl border border-slate-100 bg-slate-50/50 font-bold focus:border-primary transition-all text-sm h-12 px-4"
+        />
+    </div>
+);
+
+const ToggleField = ({ label, name, settings, handleToggle }) => (
+    <div className="flex items-center justify-between p-5 bg-white border border-slate-100 rounded-2xl group hover:border-primary transition-all shadow-sm">
+        <div className="space-y-1">
+            <p className="text-[11px] font-black uppercase tracking-widest text-slate-600">{label}</p>
+            <p className="text-[10px] font-bold text-primary tracking-wide">Module Active</p>
+        </div>
+        <button
+            type="button"
+            onClick={() => handleToggle(name)}
+            className={`w-12 h-6 rounded-full transition-all relative ${settings[name] === '1' ? 'bg-primary' : 'bg-slate-200'}`}
+        >
+            <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all ${settings[name] === '1' ? 'right-1' : 'left-1'}`}></div>
+        </button>
+    </div>
+);
 
 const SiteSettings = () => {
     const { settings: globalSettings, loadFont, updateSystemVisuals, hexToHsl, refreshSettings } = useGlobalSettings();
@@ -81,35 +111,7 @@ const SiteSettings = () => {
 
     if (isLoading) return <div className="h-96 flex items-center justify-center"><RefreshCw className="animate-spin h-8 w-8 text-primary" /></div>;
 
-    const InputField = ({ label, name, type = "text", placeholder }) => (
-        <div className="space-y-2">
-            <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">{label}</Label>
-            <Input
-                name={name}
-                type={type}
-                value={settings[name] ?? ''}
-                onChange={handleChange}
-                placeholder={placeholder}
-                className="rounded-xl border border-slate-100 bg-slate-50/50 font-bold focus:border-primary transition-all text-sm h-12 px-4"
-            />
-        </div>
-    );
 
-    const ToggleField = ({ label, name }) => (
-        <div className="flex items-center justify-between p-5 bg-white border border-slate-100 rounded-2xl group hover:border-primary transition-all shadow-sm">
-            <div className="space-y-1">
-                <p className="text-[11px] font-black uppercase tracking-widest text-slate-600">{label}</p>
-                <p className="text-[10px] font-bold text-primary tracking-wide">Module Active</p>
-            </div>
-            <button
-                type="button"
-                onClick={() => handleToggle(name)}
-                className={`w-12 h-6 rounded-full transition-all relative ${settings[name] === '1' ? 'bg-primary' : 'bg-slate-200'}`}
-            >
-                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow-sm transition-all ${settings[name] === '1' ? 'right-1' : 'left-1'}`}></div>
-            </button>
-        </div>
-    );
 
     return (
         <div className="w-full space-y-12 animate-in fade-in duration-700">
@@ -148,6 +150,7 @@ const SiteSettings = () => {
                     <TabsTrigger value="business" className="rounded-xl px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary text-[11px] font-bold uppercase tracking-wider transition-all">Commerce</TabsTrigger>
                     <TabsTrigger value="dealers" className="rounded-xl px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary text-[11px] font-bold uppercase tracking-wider transition-all">Partner Pricing</TabsTrigger>
                     <TabsTrigger value="contact" className="rounded-xl px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary text-[11px] font-bold uppercase tracking-wider transition-all">Contact</TabsTrigger>
+                    <TabsTrigger value="about" className="rounded-xl px-6 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary text-[11px] font-bold uppercase tracking-wider transition-all">About Page</TabsTrigger>
                 </TabsList>
 
                 <div className="pt-10">
@@ -157,16 +160,12 @@ const SiteSettings = () => {
                             <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                                 <CardHeader className="bg-slate-50/50 p-6 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Globe className="h-4 w-4 text-primary" /> Web Protocol</CardTitle></CardHeader>
                                 <CardContent className="p-8 space-y-6">
-                                    <InputField label="Website Name" name="website_title" placeholder="VIET SHOP..." />
+                                    <InputField settings={settings} handleChange={handleChange} label="Website Name" name="website_title" placeholder="VIET SHOP..." />
                                     <div className="space-y-2">
                                         <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">Global Tagline</Label>
                                         <Input name="description" value={settings.description ?? ''} onChange={handleChange} className="rounded-xl border border-slate-100 bg-slate-50/50 font-bold focus:border-primary transition-all text-sm h-12 px-4" />
                                     </div>
-                                    <div className="space-y-2">
-                                        <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">About Us Description</Label>
-                                        <Textarea name="about_content" value={settings.about_content ?? ''} onChange={handleChange} className="rounded-2xl border border-slate-100 bg-slate-50/50 font-bold min-h-[150px] text-sm p-4 focus:border-primary transition-all" />
-                                    </div>
-                                    <InputField label="Copyright Notice" name="copyright_text" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Copyright Notice" name="copyright_text" />
                                 </CardContent>
                             </Card>
                             <div className="space-y-6">
@@ -221,7 +220,7 @@ const SiteSettings = () => {
                                         <div className="flex gap-6 items-center bg-slate-50 p-4 rounded-2xl">
                                             <div className="w-16 h-16 rounded-xl shadow-2xl border-4 border-white shrink-0" style={{ backgroundColor: globalSettings?.primary_color || '#3b82f6' }}></div>
                                             <div className="w-full">
-                                                <InputField name="primary_color" placeholder="#3b82f6" />
+                                                <InputField settings={settings} handleChange={handleChange} name="primary_color" placeholder="#3b82f6" />
                                             </div>
                                         </div>
                                     </div>
@@ -250,12 +249,12 @@ const SiteSettings = () => {
                             <CardHeader className="bg-slate-50/50 p-8 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Layout className="h-4 w-4 text-primary" /> Feature Management</CardTitle></CardHeader>
                             <CardContent className="p-10">
                                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    <ToggleField label="Hero Banner Section" name="show_hero" />
-                                    <ToggleField label="Product Categories" name="show_categories" />
-                                    <ToggleField label="Whishlist Feature" name="show_wishlist" />
-                                    <ToggleField label="Company Values Area" name="show_why_us" />
-                                    <ToggleField label="Trust & Reviews Node" name="show_reviews" />
-                                    <ToggleField label="Partner Logo Strip" name="show_brands" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Hero Banner Section" name="show_hero" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Product Categories" name="show_categories" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Whishlist Feature" name="show_wishlist" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Company Values Area" name="show_why_us" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Trust & Reviews Node" name="show_reviews" />
+                                    <ToggleField settings={settings} handleToggle={handleToggle} label="Partner Logo Strip" name="show_brands" />
                                 </div>
                             </CardContent>
                         </Card>
@@ -267,16 +266,16 @@ const SiteSettings = () => {
                             <CardHeader className="bg-slate-50/50 p-8 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Briefcase className="h-4 w-4 text-primary" /> Strategic Finance</CardTitle></CardHeader>
                             <CardContent className="p-10">
                                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                    <InputField label="Currency Symbol" name="currency_symbol" />
-                                    <InputField label="Standard Tax (%)" name="tax_percentage" type="number" />
-                                    <InputField label="Static Shipping" name="shipping_charges" type="number" />
-                                    <InputField label="GST Registration ID" name="gst_number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Currency Symbol" name="currency_symbol" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Standard Tax (%)" name="tax_percentage" type="number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Static Shipping" name="shipping_charges" type="number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="GST Registration ID" name="gst_number" />
                                 </div>
                                 <div className="pt-10 border-t border-slate-100 mt-10 space-y-8">
                                     <h4 className="text-xs font-black uppercase tracking-[0.2em] text-primary">Payment Architecture</h4>
                                     <div className="grid md:grid-cols-2 gap-10">
-                                        <InputField label="Razorpay Account Key" name="razorpay_key_id" placeholder="rzp_test_..." />
-                                        <InputField label="Secret Protection Key" name="razorpay_key_secret" type="password" placeholder="secret_..." />
+                                        <InputField settings={settings} handleChange={handleChange} label="Razorpay Account Key" name="razorpay_key_id" placeholder="rzp_test_..." />
+                                        <InputField settings={settings} handleChange={handleChange} label="Secret Protection Key" name="razorpay_key_secret" type="password" placeholder="secret_..." />
                                     </div>
                                 </div>
                             </CardContent>
@@ -289,9 +288,9 @@ const SiteSettings = () => {
                             <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                                 <CardHeader className="bg-slate-50/50 p-6 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><ShieldCheck className="h-4 w-4 text-primary" /> Tier Logic</CardTitle></CardHeader>
                                 <CardContent className="p-8 space-y-6">
-                                    <InputField label="Tier 1 (Silver) Discount %" name="dealer_tier_1_discount" type="number" placeholder="0" />
-                                    <InputField label="Tier 2 (Gold) Discount %" name="dealer_tier_2_discount" type="number" placeholder="5" />
-                                    <InputField label="Tier 3 (Platinum) Discount %" name="dealer_tier_3_discount" type="number" placeholder="10" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Tier 1 (Silver) Discount %" name="dealer_tier_1_discount" type="number" placeholder="0" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Tier 2 (Gold) Discount %" name="dealer_tier_2_discount" type="number" placeholder="5" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Tier 3 (Platinum) Discount %" name="dealer_tier_3_discount" type="number" placeholder="10" />
                                 </CardContent>
                             </Card>
                             <div className="space-y-6">
@@ -314,19 +313,20 @@ const SiteSettings = () => {
                             <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                                 <CardHeader className="bg-slate-50/50 p-6 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Mail className="h-4 w-4 text-primary" /> Direct Channels</CardTitle></CardHeader>
                                 <CardContent className="p-8 space-y-6">
-                                    <InputField label="Physical Office" name="contact_address" />
-                                    <InputField label="Support Hotline" name="mobile_number" />
-                                    <InputField label="Inquiry Email" name="email_id" />
-                                    <InputField label="WhatsApp Connect" name="whatsapp_number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Physical Office" name="contact_address" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Support Hotline" name="mobile_number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Inquiry Email" name="email_id" />
+                                    <InputField settings={settings} handleChange={handleChange} label="WhatsApp Connect" name="whatsapp_number" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Google Map Embed URL" name="google_map_url" placeholder="https://www.google.com/maps/embed?pb=..." />
                                 </CardContent>
                             </Card>
                             <Card className="rounded-3xl border-slate-100 shadow-sm overflow-hidden">
                                 <CardHeader className="bg-slate-50/50 p-6 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Share2 className="h-4 w-4 text-primary" /> Social Presence</CardTitle></CardHeader>
                                 <CardContent className="p-8 space-y-6">
-                                    <InputField label="Facebook Link" name="social_facebook" />
-                                    <InputField label="Instagram Link" name="social_instagram" />
-                                    <InputField label="X (Twitter) Link" name="social_twitter" />
-                                    <InputField label="LinkedIn Link" name="social_linkedin" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Facebook Link" name="social_facebook" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Instagram Link" name="social_instagram" />
+                                    <InputField settings={settings} handleChange={handleChange} label="X (Twitter) Link" name="social_twitter" />
+                                    <InputField settings={settings} handleChange={handleChange} label="LinkedIn Link" name="social_linkedin" />
                                 </CardContent>
                             </Card>
                             
@@ -334,15 +334,42 @@ const SiteSettings = () => {
                                 <CardHeader className="bg-slate-50/50 p-6 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Mail className="h-4 w-4 text-primary" /> Automated Emails (SMTP)</CardTitle></CardHeader>
                                 <CardContent className="p-8 space-y-6">
                                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                                        <InputField label="SMTP Host Server" name="smtp_host" placeholder="mail.torvotools.com" />
-                                        <InputField label="SMTP Port" name="smtp_port" placeholder="465 or 587" />
-                                        <InputField label="Email Username" name="smtp_user" placeholder="info@torvotools.com" />
-                                        <InputField label="Email Password" name="smtp_pass" type="password" placeholder="••••••••" />
+                                        <InputField settings={settings} handleChange={handleChange} label="SMTP Host Server" name="smtp_host" placeholder="mail.torvotools.com" />
+                                        <InputField settings={settings} handleChange={handleChange} label="SMTP Port" name="smtp_port" placeholder="465 or 587" />
+                                        <InputField settings={settings} handleChange={handleChange} label="Email Username" name="smtp_user" placeholder="info@torvotools.com" />
+                                        <InputField settings={settings} handleChange={handleChange} label="Email Password" name="smtp_pass" type="password" placeholder="••••••••" />
                                     </div>
                                     <p className="text-[10px] font-bold text-slate-500 tracking-widest uppercase mt-3 px-1 italic">Configure these settings to enable automated order receipts and system notifications.</p>
                                 </CardContent>
                             </Card>
                         </div>
+                    </TabsContent>
+
+                    {/* ABOUT PAGE TAB */}
+                    <TabsContent value="about" className="space-y-8 animate-in slide-in-from-bottom-4 duration-500">
+                        <Card className="rounded-[2.5rem] border-slate-100 shadow-sm overflow-hidden">
+                            <CardHeader className="bg-slate-50/50 p-8 border-b border-slate-100"><CardTitle className="text-sm font-black uppercase tracking-widest flex items-center gap-3"><Users className="h-4 w-4 text-primary" /> About Page Content</CardTitle></CardHeader>
+                            <CardContent className="p-10 space-y-6">
+                                <div className="grid md:grid-cols-2 gap-8">
+                                    <InputField settings={settings} handleChange={handleChange} label="Hero Title" name="about_hero_title" placeholder="Engineering Reliability." />
+                                    <InputField settings={settings} handleChange={handleChange} label="Hero Subtitle" name="about_hero_subtitle" placeholder="Defining the standard..." />
+                                </div>
+                                <div className="space-y-2 pt-4 border-t border-slate-100">
+                                    <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">Narrative Section Title</Label>
+                                    <Input name="about_narrative_title" value={settings.about_narrative_title ?? ''} onChange={handleChange} placeholder="Operational Excellence Since 2015." className="rounded-xl border border-slate-100 bg-slate-50/50 font-bold focus:border-primary transition-all text-sm h-12 px-4" />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label className="text-[11px] font-black uppercase tracking-widest text-slate-600 pl-1">About Us Description</Label>
+                                    <Textarea name="about_content" value={settings.about_content ?? ''} onChange={handleChange} className="rounded-2xl border border-slate-100 bg-slate-50/50 font-bold min-h-[150px] text-sm p-4 focus:border-primary transition-all" placeholder="Tell your company story..." />
+                                </div>
+                                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 pt-6 border-t border-slate-100">
+                                    <InputField settings={settings} handleChange={handleChange} label="Stat 1 Value" name="about_stats_1_value" placeholder="500+" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Stat 1 Label" name="about_stats_1_label" placeholder="Authorized Centers" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Stat 2 Value" name="about_stats_2_value" placeholder="100%" />
+                                    <InputField settings={settings} handleChange={handleChange} label="Stat 2 Label" name="about_stats_2_label" placeholder="Genuine Protocol" />
+                                </div>
+                            </CardContent>
+                        </Card>
                     </TabsContent>
                 </div>
             </Tabs>
