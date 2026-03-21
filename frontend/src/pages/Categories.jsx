@@ -61,7 +61,7 @@ const Categories = () => {
                             {/* Geometric Pattern Overlay */}
                             <div className="absolute top-0 right-0 w-24 h-24 bg-slate-50 -translate-y-1/2 translate-x-1/2 rotate-45 group-hover:bg-primary/10 transition-colors"></div>
 
-                            <div className="aspect-[16/10] overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-1000">
+                            <div className="aspect-[16/10] overflow-hidden transition-all duration-1000">
                                 <img
                                     src={category.image_url ? (category.image_url.startsWith('http') ? category.image_url : `${IMAGE_BASE_URL}${category.image_url}`) : 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop'}
                                     alt={category.name}

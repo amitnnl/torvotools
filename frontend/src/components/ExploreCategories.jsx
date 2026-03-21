@@ -50,7 +50,7 @@ const ExploreCategories = () => {
               <img
                 src={category.image_url ? (category.image_url.startsWith('http') ? category.image_url : `${IMAGE_BASE_URL}${category.image_url}`) : 'https://images.unsplash.com/photo-1581092160562-40aa08e78837?q=80&w=2070&auto=format&fit=crop'}
                 alt={category.name}
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-110"
+                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
               />
 
               {/* Overlay */}

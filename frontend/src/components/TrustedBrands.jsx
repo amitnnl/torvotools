@@ -61,7 +61,7 @@ const TrustedBrands = () => {
         <Slider {...sliderSettings}>
           {brands.map((brand) => (
             <div key={brand.id} className="px-12 outline-none">
-              <div className="h-20 flex items-center justify-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 group">
+              <div className="h-20 flex items-center justify-center transition-all duration-500 group">
                 <img
                   src={`${IMAGE_BASE_URL}${brand.logo_url}`}
                   alt={brand.name}
@@ -80,7 +80,7 @@ const TrustedBrands = () => {
            <Slider {...{...sliderSettings, rtl: true}}>
             {brands.slice().reverse().map((brand) => (
               <div key={`rev-${brand.id}`} className="px-12 outline-none">
-                <div className="h-20 flex items-center justify-center grayscale opacity-40 hover:grayscale-0 hover:opacity-100 transition-all duration-500 group">
+                <div className="h-20 flex items-center justify-center transition-all duration-500 group">
                   <img
                     src={`${IMAGE_BASE_URL}${brand.logo_url}`}
                     alt={brand.name}

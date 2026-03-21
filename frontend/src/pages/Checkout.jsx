@@ -415,7 +415,7 @@ const Checkout = () => {
                                 {cart.map(item => (
                                     <div key={item.id} className="flex gap-6 group">
                                         <div className="w-16 h-11 bg-white border border-white/10 p-2 shrink-0">
-                                            <img src={item.image_url ? (item.image_url.startsWith('http') ? item.image_url : `${IMAGE_BASE_URL}${item.image_url}`) : 'https://placehold.co/100'} alt={item.name} className="w-full h-full object-contain grayscale group-hover:grayscale-0 transition-all" />
+                                            <img src={item.image_url ? (item.image_url.startsWith('http') ? item.image_url : `${IMAGE_BASE_URL}${item.image_url}`) : 'https://placehold.co/100'} alt={item.name} className="w-full h-full object-contain transition-all" />
                                         </div>
                                         <div className="flex-1 space-y-1">
                                             <p className="text-[10px] font-bold font-semibold tracking-tight leading-tight group-hover:text-primary transition-colors text-white">{item.name}</p>

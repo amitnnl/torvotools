@@ -53,7 +53,7 @@ const Brands = () => {
               <div key={brand.id} className="group bg-white border border-slate-100 p-12 space-y-8 hover:border-primary transition-all duration-500 relative overflow-hidden shadow-sm hover:shadow-2xl">
                 <div className="absolute top-0 left-0 w-1 h-0 bg-primary group-hover:h-full transition-all duration-500"></div>
                 
-                <div className="h-24 flex items-center justify-center grayscale group-hover:grayscale-0 transition-all duration-700 p-4">
+                <div className="h-24 flex items-center justify-center transition-all duration-700 p-4">
                   <img
                     src={brand.logo_url ? (brand.logo_url.startsWith('http') ? brand.logo_url : `${IMAGE_BASE_URL}${brand.logo_url}`) : 'https://placehold.co/200x100?text=BRAND'}
                     alt={brand.name}
@@ -102,7 +102,7 @@ const Brands = () => {
                   </div>
                </div>
                <div className="relative aspect-video overflow-hidden border-[10px] border-white shadow-2xl">
-                  <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover grayscale opacity-50" />
+                  <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?q=80&w=2070&auto=format&fit=crop" className="w-full h-full object-cover" />
                   <div className="absolute inset-0 flex items-center justify-center">
                      <div className="bg-primary p-10 shadow-2xl">
                         <ShieldCheck className="h-11 w-16 text-white" />

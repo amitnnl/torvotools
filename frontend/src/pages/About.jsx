@@ -80,7 +80,7 @@ const About = () => {
               <div className="aspect-square bg-slate-100 overflow-hidden relative group shadow-2xl border-white border-[1px]">
                 <img
                   src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?q=80&w=2070&auto=format&fit=crop"
-                  className="w-full h-full object-cover grayscale transition-transform duration-1000 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 border-[20px] border-white/40 pointer-events-none"></div>
               </div>
