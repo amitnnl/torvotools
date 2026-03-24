@@ -34,8 +34,8 @@ const ExploreCategories = () => {
               <Layers className="h-4 w-4 text-primary" />
               <span className="text-gray-400 text-xs font-bold uppercase tracking-normal">Sector Logic</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-semibold tracking-tight text-secondary leading-none">
-              Shop by <br /> <span className="text-primary">Category.</span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-semibold tracking-tight text-primary hover:text-secondary transition-colors duration-300 leading-none">
+              Shop by <br /> Category.
             </h2>
           </div>
         </div>
