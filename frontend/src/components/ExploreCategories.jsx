@@ -34,8 +34,8 @@ const ExploreCategories = () => {
               <Layers className="h-4 w-4 text-primary" />
               <span className="text-gray-400 text-xs font-bold uppercase tracking-normal">Sector Logic</span>
             </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-semibold tracking-tight text-primary hover:text-secondary transition-colors duration-300 leading-none">
-              Shop by <br /> Category.
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-semibold tracking-tight text-secondary leading-none">
+              Shop by <br /> <span className="text-primary">Category.</span>
             </h2>
           </div>
         </div>
@@ -59,8 +59,8 @@ const ExploreCategories = () => {
               {/* Content */}
               <div className="absolute inset-0 p-10 flex flex-col justify-end">
                 <div className="space-y-4">
-                  <p className="text-primary text-[10px] font-bold uppercase tracking-normal opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">Explore Module</p>
-                  <h3 className="text-2xl font-bold text-white font-semibold tracking-tight leading-none group-hover:text-primary transition-colors">{category.name}</h3>
+                  <p className="text-primary group-hover:text-secondary text-[10px] font-bold uppercase tracking-normal opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">Explore Module</p>
+                  <h3 className="text-2xl font-bold text-primary font-semibold tracking-tight leading-none group-hover:text-secondary transition-colors">{category.name}</h3>
                   <div className="h-1 w-12 bg-primary transform origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
               </div>
