@@ -31,8 +31,8 @@ export const WishlistProvider = ({ children }) => {
 
     const toggleWishlist = async (productId) => {
         if (!user) {
-            alert("Please login to manage your wishlist.");
-            return;
+            // Return false so the calling component can redirect to login
+            return false;
         }
 
         const isItemInWishlist = wishlist.some(item => item.id === productId);

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { login as apiLogin } from '../services/api';
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const { login } = useContext(AuthContext);
 
     const handleSubmit = async (e) => {
@@ -19,7 +20,8 @@ const Login = () => {
             const response = await apiLogin({ email, password });
             if (response.data.jwt) {
                 login(response.data.jwt);
-                navigate('/');
+                const redirect = searchParams.get('redirect') || '/';
+                navigate(redirect);
             }
         } catch (err) {
             setError(err.response?.data?.message || 'Invalid credentials or connection error.');

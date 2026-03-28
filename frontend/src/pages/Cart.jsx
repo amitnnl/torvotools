@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { CartContext } from '../contexts/CartContext';
 import { AuthContext } from '../contexts/AuthContext';
 import { useSettings } from '../contexts/SettingsContext';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { verifyCoupon, IMAGE_BASE_URL } from '../services/api';
 import { formatCurrency } from '../lib/utils';
 import { Button } from "@/components/ui/button";
@@ -14,6 +14,15 @@ const Cart = () => {
     const { settings } = useSettings();
     const [couponCode, setCouponCode] = useState('');
     const [couponError, setCouponError] = useState('');
+    const navigate = useNavigate();
+
+    const handleCheckout = () => {
+        if (!user) {
+            navigate('/login?redirect=/checkout');
+        } else {
+            navigate('/checkout');
+        }
+    };
 
     const handleApplyCoupon = async (e) => {
         e.preventDefault();
@@ -173,11 +182,9 @@ const Cart = () => {
                                 )}
                             </div>
 
-                            <Button asChild size="lg" className="w-full h-10 btn-primary-sleek">
-                                <Link to="/checkout" className="text-white">
-                                    Confirm & Proceed
-                                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2" />
-                                </Link>
+                            <Button size="lg" onClick={handleCheckout} className="w-full h-10 btn-primary-sleek">
+                                Confirm &amp; Proceed
+                                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-2" />
                             </Button>
 
                             {/* Secure Badges */}

@@ -23,7 +23,21 @@ const ExploreCategories = () => {
     fetchCategories();
   }, []);
 
-  if (loading) return null;
+  if (loading) return (
+    <section className="bg-[#f8f8f8] section-padding overflow-hidden">
+      <div className="container-custom">
+        <div className="mb-8 space-y-3">
+          <div className="h-3 w-24 bg-gray-200 animate-pulse rounded" />
+          <div className="h-10 w-64 bg-gray-200 animate-pulse rounded" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[...Array(4)].map((_, i) => (
+            <div key={i} className={`h-[400px] bg-gray-200 animate-pulse ${i % 2 === 1 ? 'lg:translate-y-8' : ''}`} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 
   return (
     <section className="bg-[#f8f8f8] section-padding overflow-hidden">

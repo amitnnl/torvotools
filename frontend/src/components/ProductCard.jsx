@@ -1,5 +1,5 @@
 import { useContext, memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
 import { useSettings } from "../contexts/SettingsContext";
 import { WishlistContext } from "../contexts/WishlistContext";
@@ -19,6 +19,7 @@ const ProductCard = memo(({ product }) => {
   const { user } = useContext(AuthContext);
   const { settings } = useSettings();
   const { toggleWishlist, isInWishlist } = useContext(WishlistContext);
+  const navigate = useNavigate();
 
   let price = product.price;
   if (user && user.role === "dealer") {
@@ -40,9 +41,10 @@ const ProductCard = memo(({ product }) => {
       <div className="absolute top-4 right-4 z-10 space-y-2">
         {/* Wishlist Toggle */}
         <button
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
-            toggleWishlist(product.id);
+            const result = await toggleWishlist(product.id);
+            if (result === false) navigate('/login');
           }}
           className="p-2.5 bg-white/80 backdrop-blur-md border border-slate-100 rounded-sm transition-all duration-300 hover:bg-white hover:shadow-lg group/heart block"
         >

@@ -14,10 +14,24 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const token = localStorage.getItem('jwt');
         if (token) {
-            const decoded = jwtDecode(token);
-            setUser(decoded.data);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            api.defaults.headers.common['Authorization'] = `Bearer ${token}`; // Set on the custom api instance too
+            try {
+                const decoded = jwtDecode(token);
+                // Check if token is expired
+                const isExpired = decoded.exp && decoded.exp * 1000 < Date.now();
+                if (isExpired) {
+                    // Auto-clear expired token silently
+                    localStorage.removeItem('jwt');
+                    setUser(null);
+                } else {
+                    setUser(decoded.data);
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+                }
+            } catch (e) {
+                // Malformed token — clear it
+                localStorage.removeItem('jwt');
+                setUser(null);
+            }
         }
         setLoading(false);
     }, []);

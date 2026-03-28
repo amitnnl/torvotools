@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { getProfile, updateProfile, getReportUrl, getCredit } from '../services/api';
 import { useSettings } from '../contexts/SettingsContext';
+import { formatCurrency } from '../lib/utils';
 import { Button } from "@/components/ui/button";
 import {
     User, Mail, Lock, Building2, FileCheck, MapPin,

@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
         removeCoupon();
     };
 
-    const total = subtotal - discount;
+    const total = Math.max(0, subtotal - discount);
 
     return (
         <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, subtotal, total, coupon, discount, applyCoupon, removeCoupon }}>

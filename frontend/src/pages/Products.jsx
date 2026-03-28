@@ -18,6 +18,8 @@ import {
   X
 } from 'lucide-react';
 
+// FilterSidebar defined below Products component for readability, but at module scope for stability.
+
 const Products = () => {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
@@ -99,89 +101,89 @@ const Products = () => {
 
     if (loading && products.length === 0) return <div className="h-screen flex items-center justify-center bg-gray-50"><div className="w-12 h-9 border-4 border-primary border-t-transparent rounded-full animate-spin"></div></div>;
 
-    const FilterSidebar = () => (
-        <div className="space-y-12">
-            {/* Price Range Filter */}
-            <div className="space-y-6">
-                <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4 flex items-center gap-2">
-                    <IndianRupee className="h-4 w-4 text-primary" /> Price Range
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 tracking-wide">Min</label>
-                        <input 
-                            type="number" 
-                            placeholder="0"
-                            value={minPrice}
-                            onChange={(e) => setMinPrice(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-100 p-3 text-xs font-bold focus:outline-none focus:border-primary transition-all"
-                        />
-                    </div>
-                    <div className="space-y-2">
-                        <label className="text-[10px] font-bold text-slate-400 tracking-wide">Max</label>
-                        <input 
-                            type="number" 
-                            placeholder="ANY"
-                            value={maxPrice}
-                            onChange={(e) => setMaxPrice(e.target.value)}
-                            className="w-full bg-slate-50 border border-slate-100 p-3 text-xs font-bold focus:outline-none focus:border-primary transition-all"
-                        />
-                    </div>
+const FilterSidebar = ({ minPrice, setMinPrice, maxPrice, setMaxPrice, categories, brands, selectedCategory, setSelectedCategory, selectedBrand, setSelectedBrand, setSearchTerm, setSortBy }) => (
+    <div className="space-y-12">
+        {/* Price Range Filter */}
+        <div className="space-y-6">
+            <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4 flex items-center gap-2">
+                <IndianRupee className="h-4 w-4 text-primary" /> Price Range
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-slate-400 tracking-wide">Min</label>
+                    <input 
+                        type="number" 
+                        placeholder="0"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-100 p-3 text-xs font-bold focus:outline-none focus:border-primary transition-all"
+                    />
+                </div>
+                <div className="space-y-2">
+                    <label className="text-[10px] font-bold text-slate-400 tracking-wide">Max</label>
+                    <input 
+                        type="number" 
+                        placeholder="ANY"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                        className="w-full bg-slate-50 border border-slate-100 p-3 text-xs font-bold focus:outline-none focus:border-primary transition-all"
+                    />
                 </div>
             </div>
-
-            {/* Category Filter */}
-            <div className="space-y-6">
-                <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4">Sector Modules</h3>
-                <div className="flex flex-col gap-2">
-                    <button 
-                      onClick={() => setSelectedCategory("All")}
-                      className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedCategory === "All" ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
-                    >
-                        Global Inventory
-                    </button>
-                    {categories.map(cat => (
-                        <button 
-                          key={cat.id}
-                          onClick={() => setSelectedCategory(cat.id.toString())}
-                          className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedCategory === cat.id.toString() ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
-                        >
-                            {cat.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            {/* Brand Filter */}
-            <div className="space-y-6">
-                <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4">Manufacturer</h3>
-                <div className="flex flex-col gap-2">
-                    <button 
-                      onClick={() => setSelectedBrand("All")}
-                      className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedBrand === "All" ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
-                    >
-                        All Partners
-                    </button>
-                    {brands.map(brand => (
-                        <button 
-                          key={brand.id}
-                          onClick={() => setSelectedBrand(brand.id.toString())}
-                          className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedBrand === brand.id.toString() ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
-                        >
-                            {brand.name}
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            <button 
-                onClick={() => {setSearchTerm(""); setSelectedCategory("All"); setSelectedBrand("All"); setMinPrice(""); setMaxPrice(""); setSortBy("newest");}}
-                className="w-full py-2 text-[10px] font-bold tracking-wide text-red-500 border border-red-500/10 hover:bg-red-500 hover:text-white transition-all shadow-sm"
-            >
-                Reset System Parameters
-            </button>
         </div>
-    );
+
+        {/* Category Filter */}
+        <div className="space-y-6">
+            <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4">Sector Modules</h3>
+            <div className="flex flex-col gap-2">
+                <button 
+                  onClick={() => setSelectedCategory("All")}
+                  className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedCategory === "All" ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
+                >
+                    Global Inventory
+                </button>
+                {categories.map(cat => (
+                    <button 
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id.toString())}
+                      className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedCategory === cat.id.toString() ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
+                    >
+                        {cat.name}
+                    </button>
+                ))}
+            </div>
+        </div>
+
+        {/* Brand Filter */}
+        <div className="space-y-6">
+            <h3 className="text-sm font-bold tracking-wide text-slate-900 border-l-4 border-primary pl-4">Manufacturer</h3>
+            <div className="flex flex-col gap-2">
+                <button 
+                  onClick={() => setSelectedBrand("All")}
+                  className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedBrand === "All" ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
+                >
+                    All Partners
+                </button>
+                {brands.map(brand => (
+                    <button 
+                      key={brand.id}
+                      onClick={() => setSelectedBrand(brand.id.toString())}
+                      className={`text-left px-4 py-3 text-[10px] font-bold tracking-wide transition-all border ${selectedBrand === brand.id.toString() ? 'bg-slate-900 border-slate-900 text-white shadow-lg' : 'bg-white border-slate-100 text-slate-400 hover:border-primary'}`}
+                    >
+                        {brand.name}
+                    </button>
+                ))}
+            </div>
+        </div>
+
+        <button 
+            onClick={() => {setSearchTerm(""); setSelectedCategory("All"); setSelectedBrand("All"); setMinPrice(""); setMaxPrice(""); setSortBy("newest");}}
+            className="w-full py-2 text-[10px] font-bold tracking-wide text-red-500 border border-red-500/10 hover:bg-red-500 hover:text-white transition-all shadow-sm"
+        >
+            Reset System Parameters
+        </button>
+    </div>
+);
 
     return (
         <div className="bg-white min-h-screen page-header-padding">
@@ -248,7 +250,7 @@ const Products = () => {
                                     <SheetHeader className="mb-12 border-b border-slate-100 pb-6">
                                         <SheetTitle className="text-3xl font-bold font-semibold tracking-tight text-slate-900">Refine Search</SheetTitle>
                                     </SheetHeader>
-                                    <FilterSidebar />
+                                    <FilterSidebar minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice} categories={categories} brands={brands} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} setSearchTerm={setSearchTerm} setSortBy={setSortBy} />
                                 </SheetContent>
                             </Sheet>
                         </div>
@@ -258,7 +260,7 @@ const Products = () => {
                 <div className="flex flex-col lg:flex-row gap-10">
                     {/* Desktop Sidebar */}
                     <aside className="hidden lg:block w-80 shrink-0">
-                        <FilterSidebar />
+                        <FilterSidebar minPrice={minPrice} setMinPrice={setMinPrice} maxPrice={maxPrice} setMaxPrice={setMaxPrice} categories={categories} brands={brands} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory} selectedBrand={selectedBrand} setSelectedBrand={setSelectedBrand} setSearchTerm={setSearchTerm} setSortBy={setSortBy} />
                     </aside>
 
                     {/* Products Grid */}

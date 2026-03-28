@@ -46,31 +46,36 @@ function post_rfqs($id = null, $user_data = null) {
 
 // GET /api/rfqs - Get RFQs
 function get_rfqs($id = null, $user_data = null) {
+    if (!$user_data) {
+        http_response_code(401);
+        echo json_encode(["message" => "Unauthorized."]);
+        return;
+    }
+
     $database = new Database();
     $db = $database->getConnection();
 
-        if ($user_data->role === 'admin') {
-            $query = "SELECT r.*, p.name as product_name, u.name as dealer_name, q.quoted_price 
-                      FROM rfqs r 
-                      JOIN products p ON r.product_id = p.id 
-                      JOIN users u ON r.dealer_id = u.id 
-                      LEFT JOIN quotes q ON r.id = q.rfq_id
-                      ORDER BY r.created_at DESC";
-            $stmt = $db->prepare($query);
-        } else if ($user_data->role === 'dealer') {
-            $query = "SELECT r.*, p.name as product_name, q.quoted_price, q.id as quote_id
-                      FROM rfqs r 
-                      JOIN products p ON r.product_id = p.id 
-                      LEFT JOIN quotes q ON r.id = q.rfq_id
-                      WHERE r.dealer_id = :dealer_id 
-                      ORDER BY r.created_at DESC";
-            $stmt = $db->prepare($query);
-            $stmt->bindParam(":dealer_id", $user_data->id);
-        }
-     else {
+    if ($user_data->role === 'admin') {
+        $query = "SELECT r.*, p.name as product_name, u.name as dealer_name, q.quoted_price 
+                  FROM rfqs r 
+                  JOIN products p ON r.product_id = p.id 
+                  JOIN users u ON r.dealer_id = u.id 
+                  LEFT JOIN quotes q ON r.id = q.rfq_id
+                  ORDER BY r.created_at DESC";
+        $stmt = $db->prepare($query);
+    } else if ($user_data->role === 'dealer') {
+        $query = "SELECT r.*, p.name as product_name, q.quoted_price, q.id as quote_id
+                  FROM rfqs r 
+                  JOIN products p ON r.product_id = p.id 
+                  LEFT JOIN quotes q ON r.id = q.rfq_id
+                  WHERE r.dealer_id = :dealer_id 
+                  ORDER BY r.created_at DESC";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(":dealer_id", $user_data->id);
+    } else {
         http_response_code(403);
-        echo json_encode(array("message" => "Forbidden."));
-        exit();
+        echo json_encode(["message" => "Forbidden."]);
+        return;
     }
 
     $stmt->execute();

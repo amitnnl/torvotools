@@ -28,7 +28,7 @@ function get_invoices($id = null, $user_data = null) {
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':user_id', $user_data->id);
         } else {
-            $query = "SELECT * FROM invoices i WHERE i.user_id = :user_id ORDER BY i.created_at DESC";
+            $query = "SELECT i.* FROM invoices i WHERE i.user_id = :user_id ORDER BY i.id DESC";
             $stmt = $db->prepare($query);
             $stmt->bindParam(':user_id', $user_data->id);
         }
