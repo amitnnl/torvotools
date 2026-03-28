@@ -1,1 +1,0 @@
-import{d as r,A as s,j as e,an as a}from"./index-DRZobqeO.js";const u=({children:n})=>{const{user:t,loading:o}=r.useContext(s);return o?e.jsx("div",{children:"Loading..."}):!t||t.role!=="admin"?e.jsx(a,{to:"/login"}):n};export{u as default};
